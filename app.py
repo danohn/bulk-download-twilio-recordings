@@ -49,11 +49,10 @@ for record in recordings:
     recording_list.append(media_url)
 
     try:
-        print(f"About to download Recording {record.sid}")
         r = requests.get(media_url, auth=(account_sid, auth_token))
         r.raise_for_status()
     except requests.exceptions.RequestException as req_err:
-        logger.error(f"Error downloading media for {record.sid}: {str(req_err)}")
+        logger.error(f"Failed to download {record.sid}: {str(req_err)}")
         continue
 
     with open(f"recordings/{record.sid}.wav", "wb") as f:
